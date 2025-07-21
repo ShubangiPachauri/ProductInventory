@@ -1,45 +1,36 @@
 package com.demo.inventory.controller;
 
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.*;
-
 import com.demo.inventory.model.User;
 import com.demo.inventory.service.UserService;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.*;
+
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class UserController {
+	private final UserService userService;
 
-    private final UserService userService;
+	// Register endpoint
+	@PostMapping("/register")
+	public String registerUser(@RequestParam String username,
+	                            @RequestParam String email,
+	                            @RequestParam String password) {
+	    return userService.register(username, email, password);
+	}
 
-    @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody User user) {
-        return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public List<User> getAll() {
-        return userService.getAll();
-    }
-
-    @GetMapping("/{id}")
-    public User getById(@PathVariable Long id) {
-        return userService.getById(id);
-    }
-
-    @PutMapping("/{id}")
-    public User update(@PathVariable Long id, @Valid @RequestBody User user) {
-        return userService.update(id, user);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        userService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+	// Login endpoint
+	@PostMapping("/login")
+	public String loginUser(@RequestParam String username,
+	                         @RequestParam String password) {
+	    return userService.login(username, password);
+   }
+	// Get all users endpoint
+	@GetMapping("/users")
+	public List<User> getAllUsers() {
+	    return userService.getAllUsers();
+	}
 }

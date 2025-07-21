@@ -35,8 +35,3 @@ INSERT INTO purchase_order_item (purchase_order_id, product_id, ordered_quantity
 (1, 1, 50, 0, 110.00),
 (2, 2, 100, 100, 35.00);
 
--- USER TABLE
-INSERT INTO user (username, email, password_hash, role) VALUES
-('admin', 'admin@ims.com', '$2a$10$Abcd1234EncryptedPasswordHere', 'ADMIN'),
-('manager', 'manager@ims.com', '$2a$10$Xyz5678AnotherEncryptedHash', 'MANAGER');
-
